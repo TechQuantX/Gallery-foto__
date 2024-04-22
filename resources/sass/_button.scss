@@ -1,0 +1,12 @@
+// Import Variabel
+@import 'variables';
+
+.btn-primary {
+    background-color: $primary-color;
+    border-color: $primary-color;
+}
+
+.btn-primary:hover {
+    background-color: darken($primary-color, 10%);
+    border-color: darken($primary-color, 10%);
+}

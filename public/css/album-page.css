@@ -1,0 +1,29 @@
+/* album-page.css */
+
+.btn-view-album {
+    background-color: #3490dc;
+    color: #fff;
+    border: none;
+    padding: 0.5rem 1rem;
+    text-decoration: none;
+    border-radius: 0.25rem;
+    transition: background-color 0.3s ease;
+}
+
+.btn-view-album:hover {
+    background-color: #2779bd;
+}
+
+.btn-save-album {
+    background-color: #38c172;
+    color: #fff;
+    border: none;
+    padding: 0.5rem 1rem;
+    text-decoration: none;
+    border-radius: 0.25rem;
+    transition: background-color 0.3s ease;
+}
+
+.btn-save-album:hover {
+    background-color: #2f9e66;
+}
