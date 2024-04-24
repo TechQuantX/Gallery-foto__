@@ -2,7 +2,85 @@
 
 @section('content')
     <div class="container">
+        <style>
+            .toggle-icon {
+                cursor: pointer;
+            }
+
+            .profile-pic {
+                max-width: 100px;
+                border-radius: 50%;
+                box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.5);
+                /* Menambahkan bayangan */
+            }
+
+            .album-card .rounded-circle {
+                width: 60px;
+                height: 60px;
+            }
+
+            .album-card .img-fluid {
+                max-width: 60px;
+                max-height: 60px;
+                border-radius: 50%;
+                object-fit: cover;
+            }
+
+            .rounded-profile-img {
+                border-radius: 50%;
+                transition: transform 0.3s;
+            }
+
+            .rounded-profile-img:hover {
+                transform: scale(1.1);
+                /* Efek zoom ketika hover */
+            }
+        </style>
         <h1 class="mb-4">Your Account</h1>
+        <div class="mb-4">
+            <strong>Phone Number:</strong> {{ Auth::user()->nomor_hp ?? 'Not available' }}
+        </div>
+
+        <div class="mb-4 text-center">
+            <strong></strong>
+            <div
+                style="position: relative; display: inline-block; overflow: hidden; width: 200px; height: 200px; border-radius: 50%;">
+                @if (Auth::user()->foto)
+                    <img src="{{ asset('uploads/' . Auth::user()->foto) }}" alt="Your Photo"
+                        style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%; cursor: pointer;"
+                        onclick="openFullPhoto('{{ asset('uploads/' . Auth::user()->foto) }}')">
+                    <a href="{{ route('user.edit') }}"
+                        style="position: absolute; bottom: -10px; right: -10px; background-color: white; padding: 5px; border-radius: 50%;">
+                        <i class="bi bi-pencil"></i>
+                    </a>
+                @else
+                    <i class="bi bi-person" style="font-size: 200px;"></i>
+                @endif
+            </div>
+
+        </div>
+        <div class="modal fade" id="photoModal" tabindex="-1" aria-labelledby="photoModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="photoModalLabel">Your Photo</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <img id="fullPhoto" src="" alt="Full Size Photo" style="width: 100%;">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script>
+            // Fungsi untuk membuka modal dengan foto penuh
+            function openFullPhoto(photoUrl) {
+                const fullPhoto = document.getElementById('fullPhoto');
+                fullPhoto.src = photoUrl;
+                const photoModal = new bootstrap.Modal(document.getElementById('photoModal'));
+                photoModal.show();
+            }
+        </script>
 
         <div class="mb-3">
             <a href="{{ route('categories.index') }}" class="btn btn-primary">View Categories</a>
@@ -31,11 +109,6 @@
                             </div>
                         </div>
                     </div>
-                    <style>
-                        .toggle-icon {
-                            cursor: pointer;
-                        }
-                    </style>
                     <script>
                         document.addEventListener('DOMContentLoaded', function() {
                             const toggleIcon = document.querySelector('.toggle-icon');
@@ -57,12 +130,11 @@
 
             <div class="col-md-8">
                 <h2>Your Albums</h2>
-
                 @forelse(Auth::user()->albums as $album)
                     <div class="card mb-4 album-card">
                         <div class="card-body d-flex justify-content-between align-items-center">
                             <div class="d-flex align-items-center">
-                                <div class="rounded-circle overflow-hidden" style="width: 80px; height: 80px;">
+                                <div class="rounded-circle overflow-hidden">
                                     <img src="{{ asset('storage/' . $album->cover_image) }}" class="img-fluid"
                                         alt="Profile Image">
                                 </div>

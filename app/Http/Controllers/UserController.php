@@ -44,9 +44,9 @@ class UserController extends Controller
             'password' => 'nullable|string|min:8|confirmed',
             'nama_lengkap' => 'required|string|max:255',
             'alamat' => 'nullable|string',
+            'nomor_hp' => 'nullable|string|max:255', // Validasi untuk nomor HP
+            'foto' => 'nullable|image|max:2048', // Validasi untuk foto
         ]);
-
-
 
         if ($request->password) {
             $user->password = Hash::make($request->password);
@@ -56,6 +56,15 @@ class UserController extends Controller
         $user->email = $request->email;
         $user->nama_lengkap = $request->nama_lengkap;
         $user->alamat = $request->alamat;
+        $user->nomor_hp = $request->nomor_hp; // Simpan nomor HP yang baru
+
+        // Simpan foto
+        if ($request->hasFile('foto')) {
+            $foto = $request->file('foto');
+            $nama_foto = time() . '.' . $foto->getClientOriginalExtension();
+            $foto->move(public_path('uploads'), $nama_foto);
+            $user->foto = $nama_foto;
+        }
 
         $user->save();
 

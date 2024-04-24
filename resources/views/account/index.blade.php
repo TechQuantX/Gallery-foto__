@@ -1,5 +1,3 @@
-<!-- resources/views/account/index.blade.php -->
-
 @extends('layouts.app')
 
 @section('content')
@@ -12,6 +10,20 @@
 
         <div class="mb-4">
             <strong>Email:</strong> {{ Auth::user()->email }}
+        </div>
+
+        <div class="mb-4">
+            <strong>Phone Number:</strong> {{ Auth::user()->nomor_hp ?? 'Not available' }}
+        </div>
+
+        <div class="mb-4">
+            <strong>Photo:</strong>
+            @if (Auth::user()->foto)
+                <img src="{{ asset('uploads/' . Auth::user()->foto) }}" alt="Your Photo" style="max-width: 200px;"
+                    class="img-fluid rounded">
+            @else
+                No photo available.
+            @endif
         </div>
 
         <div class="row row-cols-1 row-cols-md-3 g-4 my-4">

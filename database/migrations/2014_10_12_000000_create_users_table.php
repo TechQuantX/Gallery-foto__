@@ -20,10 +20,13 @@ class CreateUsersTable extends Migration
             $table->string('email')->unique();
             $table->string('password');
             $table->string('nama_lengkap');
+            $table->string('nomor_hp')->nullable(); // Tambah kolom nomor_hp
+            $table->string('foto')->nullable(); // Tambah kolom foto
             $table->text('alamat')->nullable();
             $table->timestamps();
         });
     }
+
 
 
     /**

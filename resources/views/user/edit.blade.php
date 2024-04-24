@@ -1,5 +1,3 @@
-<!-- resources/views/user/edit.blade.php -->
-
 @extends('layouts.app')
 
 @section('content')
@@ -10,7 +8,7 @@
                     <div class="card-header">Edit Profile</div>
 
                     <div class="card-body">
-                        <form method="POST" action="{{ route('user.update') }}">
+                        <form method="POST" action="{{ route('user.update') }}" enctype="multipart/form-data">
                             @csrf
                             <div class="mb-3">
                                 <label for="username" class="form-label">Username</label>
@@ -23,15 +21,14 @@
                                     value="{{ $user->email }}" required>
                             </div>
                             <div class="mb-3">
-                                <label for="old_password" class="form-label">Old Password</label>
-                                <div class="input-group">
-                                    <input type="password" class="form-control" id="old_password" name="old_password"
-                                        value="{{ $user->password }}" readonly>
-                                    <button class="btn btn-outline-secondary" type="button"
-                                        id="showOldPassword">Show</button>
-                                </div>
+                                <label for="nomor_hp" class="form-label">Phone Number</label>
+                                <input type="text" class="form-control" id="nomor_hp" name="nomor_hp"
+                                    value="{{ $user->nomor_hp }}">
                             </div>
-
+                            <div class="mb-3">
+                                <label for="foto" class="form-label">Photo</label>
+                                <input type="file" class="form-control" id="foto" name="foto">
+                            </div>
                             <div class="mb-3">
                                 <label for="password" class="form-label">New Password</label>
                                 <input type="password" class="form-control" id="password" name="password">
@@ -53,17 +50,6 @@
                             <button type="submit" class="btn btn-primary">Update</button>
                         </form>
                     </div>
-                    <script>
-                        document.getElementById('showOldPassword').addEventListener('click', function() {
-                            var passwordInput = document.getElementById('old_password');
-                            if (passwordInput.type === 'password') {
-                                passwordInput.type = 'text';
-                            } else {
-                                passwordInput.type = 'password';
-                            }
-                        });
-                    </script>
-
                 </div>
             </div>
         </div>

@@ -47,6 +47,53 @@
         <link rel="stylesheet" href="{{ asset('css/profile.css') }}">
 
         <script src="{{ mix('js/app.js') }}"></script>
+        <style>
+            /* Gaya untuk toggle-icon */
+            .toggle-icon {
+                cursor: pointer;
+            }
+
+            /* Gaya untuk tombol "Edit Profile" */
+            .edit-profile-btn {
+                display: inline-block;
+                padding: 5px 10px;
+                background-color: #007bff;
+                color: white;
+                border-radius: 5px;
+                text-decoration: none;
+            }
+
+            .edit-profile-btn:hover {
+                background-color: #0056b3;
+            }
+
+            /* Gaya untuk album card */
+            .album-card {
+                border: 1px solid #ccc;
+                border-radius: 5px;
+                padding: 10px;
+                margin-bottom: 10px;
+            }
+
+            .album-card .card-title {
+                margin-bottom: 5px;
+            }
+
+            .album-card .card-text {
+                margin-bottom: 5px;
+            }
+
+            .album-card .img-fluid {
+                max-width: 80px;
+                max-height: 80px;
+                border-radius: 50%;
+                object-fit: cover;
+            }
+
+            .album-card .btn {
+                padding: 2px 5px;
+            }
+        </style>
     </head>
 
 <body>
@@ -103,10 +150,22 @@
                         @else
                             @auth
                                 <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('user.profile') }}">Hi,
-                                        {{ Auth::user()->username }}</a>
+                                    <a class="nav-link" href="{{ route('user.profile') }}">
+                                        Hi, {{ Auth::user()->username }}
+                                        <span id="profile-icon">
+                                            @if (Auth::user()->foto)
+                                                <img id="profile-photo" src="{{ asset('uploads/' . Auth::user()->foto) }}"
+                                                    alt="Your Photo"
+                                                    style="width: 30px; height: 30px; border-radius: 50%; margin-right: 5px; transition: transform 0.3s;">
+                                            @else
+                                                <!-- Ganti ikon default di sini -->
+                                                <i class="bi bi-person"></i>
+                                            @endif
+                                        </span>
+                                    </a>
                                 </li>
                             @endauth
+
                             <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button"
                                     data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
@@ -133,6 +192,23 @@
                                 </div>
                             </li>
                         @endguest
+
+
+                        <script>
+                            document.addEventListener('DOMContentLoaded', function() {
+                                const profilePhoto = document.getElementById('profile-photo');
+
+                                profilePhoto.addEventListener('mouseenter', function() {
+                                    profilePhoto.style.transform = 'scale(1.5)'; // Memperbesar foto
+                                });
+
+                                profilePhoto.addEventListener('mouseleave', function() {
+                                    profilePhoto.style.transform = 'scale(1)'; // Mengembalikan ukuran normal foto
+                                });
+                            });
+                        </script>
+
+
                     </ul>
                 </div>
             </div>
